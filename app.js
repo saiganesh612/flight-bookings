@@ -6,6 +6,7 @@ const mongoose = require("mongoose")
 const dbURL = process.env.DB_URL || "mongodb://localhost:27017/flights"
 mongoose.connect(dbURL)
 
+
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
