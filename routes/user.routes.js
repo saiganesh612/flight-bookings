@@ -19,7 +19,8 @@ router.post("/register", async (req, res) => {
             isAdmin: info.name === "Admin" ? true : false
         })
         await newUser.save()
-        res.status(200).json({ "message": "User created successfully." })
+        const token = newUser.generateAuthToken()
+        res.status(200).json({ "message": "User created successfully.", token, newUser })
     }
     catch (err) {
         console.log(err)
@@ -42,10 +43,9 @@ router.post("/login", async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            bookings: user.bookings,
-            token
+            bookings: user.bookings
         }
-        res.status(200).json({ user: userObj, "message": "LoggedIn Successfully" })
+        res.status(200).json({ user: userObj, token, "message": "LoggedIn Successfully" })
     }
     catch (err) {
         console.log(err)

@@ -19,7 +19,7 @@ router.post("/search-flights", async (req, res) => {
             },
             { passengers: 0 }
         )
-        res.status(200).json({ data: flights })
+        res.status(200).json({ data: flights, date: info.date })
     }
     catch (err) {
         console.log(err)
@@ -74,6 +74,20 @@ router.get("/dashboard", verifyAccessToken, async (req, res) => {
 
         delete user.password
         res.status(200).json({ data: user })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ "message": err ? err : "Something went wrong." })
+    }
+})
+
+router.get("/fetch-flight/:flightId", async (req, res) => {
+    const { flightId } = req.params
+    try {
+        const flight = await Flight.findOne({ _id: { $eq: flightId } })
+        if (!flight) throw "There is no flight with this ID."
+
+        res.status(200).json({ data: flight })
     }
     catch (err) {
         console.log(err)

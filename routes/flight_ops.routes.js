@@ -13,6 +13,8 @@ router.post("/add-new-flight", verifyAccessToken, async (req, res) => {
             endDate: data.endDate,
             From: data.from,
             To: data.to,
+            airlines: date.airline,
+            price: data.fare,
             departureTime: new Date(data.date + ' ' + data.time)
         })
         await newFlight.save()

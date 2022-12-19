@@ -7,6 +7,8 @@ const FlightSchema = new mongoose.Schema({
     From: String,
     To: String,
     departureTime: Date,
+    airlines: String,
+    price: Number,
     status: {
         type: String,
         default: "Active"
